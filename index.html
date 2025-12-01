@@ -152,15 +152,24 @@
             </button>
         </div>
 
-        <div id="game-over-screen" class="hidden absolute inset-0 bg-slate-800 z-30 flex flex-col items-center justify-center p-8 text-center pop-in">
-            <div id="go-icon" class="text-8xl mb-6 drop-shadow-2xl"></div>
+        <div id="game-over-screen" class="hidden absolute inset-0 bg-slate-800 z-30 flex flex-col items-center justify-center p-8 text-center pop-in overflow-y-auto">
+            <div id="go-icon" class="text-8xl mb-4 drop-shadow-2xl"></div>
             <h2 id="go-title" class="text-5xl font-black mb-2 text-white uppercase italic tracking-tighter"></h2>
-            <p id="go-msg" class="text-slate-400 mb-8 font-medium text-lg"></p>
+            <p id="go-msg" class="text-slate-400 mb-6 font-medium text-lg"></p>
             
-            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-700 mb-8 w-full max-w-xs relative overflow-hidden">
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-700 mb-6 w-full max-w-xs relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-50"></div>
                 <div class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">Final Score</div>
                 <div id="final-score" class="text-4xl font-mono font-black text-amber-400">0</div>
+            </div>
+
+            <div id="review-section" class="w-full max-w-sm mb-8 text-left hidden">
+                <div class="flex items-center gap-2 mb-3">
+                    <i class="fas fa-book-reader text-indigo-400"></i>
+                    <h3 class="text-slate-400 text-xs font-bold uppercase tracking-widest">Weakest Areas (Review These!)</h3>
+                </div>
+                <ul id="review-list" class="space-y-2 text-sm text-slate-300">
+                    </ul>
             </div>
             
             <button onclick="game.start()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-xl font-bold transition transform hover:scale-105 shadow-lg w-full max-w-xs">
@@ -277,13 +286,14 @@
                 lives: 3,
                 score: 0,
                 timer: 20,
-                timeLimit: 20, // Default Time Limit
+                timeLimit: 20, 
                 streak: 0,
                 coins: 0,
                 interval: null,
                 frozen: false,
                 allQuestions: [], 
-                activeQuestions: []
+                activeQuestions: [],
+                incorrectTracker: {} // Tracks missed questions by topic
             },
 
             async loadQuestions() {
@@ -338,9 +348,19 @@
 
                 if (this.state.allQuestions.length === 0) return; 
 
+                // Reset trackers for new run
+                this.state.currentQ = 0;
+                this.state.lives = 3;
+                this.state.score = 0;
+                this.state.streak = 0;
+                this.state.coins = 0;
+                this.state.frozen = false;
+                this.state.incorrectTracker = {}; // Clear previous errors
+
                 // READ TIME LIMIT FROM SLIDER
                 const sliderVal = document.getElementById('time-slider').value;
                 this.state.timeLimit = parseInt(sliderVal);
+                this.state.timer = this.state.timeLimit;
 
                 // --- PRIORITY QUEUE LOGIC ---
                 // 1. Separate "Must Know" Priority questions from the rest
@@ -364,14 +384,6 @@
 
                 this.state.activeQuestions = finalDeck;
                 // -----------------------------
-
-                this.state.currentQ = 0;
-                this.state.lives = 3;
-                this.state.score = 0;
-                this.state.timer = this.state.timeLimit;
-                this.state.streak = 0;
-                this.state.coins = 0;
-                this.state.frozen = false;
                 
                 document.getElementById('start-screen').classList.add('hidden');
                 document.getElementById('game-over-screen').classList.add('hidden');
@@ -460,7 +472,6 @@
                     return;
                 }
                 
-                // Warn at 25% remaining time instead of fixed 5s
                 if (this.state.timer <= (this.state.timeLimit * 0.25)) {
                     txt.className = "text-rose-500 animate-pulse";
                     bar.className = "h-full bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.8)]";
@@ -487,7 +498,7 @@
                 if (isCorrect) {
                     this.state.streak++;
                     const multiplier = Math.min(this.state.streak, 4);
-                    // Adjust points based on time limit difficulty (Optional but nice)
+                    // Adjust points based on time limit difficulty
                     const difficultyMod = 20 / this.state.timeLimit; 
                     const points = Math.round((1000 + (this.state.timer * 50)) * multiplier * difficultyMod);
                     const earnedCoins = 10 + (multiplier * 5);
@@ -504,6 +515,10 @@
                     this.state.lives--;
                     this.state.streak = 0;
                     this.showFloatText(btnEl, "MISS", "text-rose-500");
+                    
+                    // TRACK INCORRECT ANSWER
+                    const topic = q.topic;
+                    this.state.incorrectTracker[topic] = (this.state.incorrectTracker[topic] || 0) + 1;
                 }
                 this.updateStreakUI();
                 this.updateShopUI();
@@ -651,6 +666,10 @@
                 document.getElementById('fb-icon').className = "fas fa-hourglass-end";
                 document.getElementById('fb-icon-bg').className = "w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-lg bg-amber-500 text-white";
                 
+                // TRACK INCORRECT ANSWER (Timeout counts as wrong)
+                const topic = q.topic;
+                this.state.incorrectTracker[topic] = (this.state.incorrectTracker[topic] || 0) + 1;
+
                 if (this.state.lives <= 0) {
                     document.getElementById('next-btn').innerHTML = 'FINISH GAME <i class="fas fa-flag-checkered ml-2"></i>';
                 } else {
@@ -690,6 +709,30 @@
                 document.getElementById('final-score').innerText = this.state.score.toLocaleString();
                 this.saveHighScore();
 
+                // --- GENERATE STUDY RECOMMENDATIONS ---
+                const tracker = this.state.incorrectTracker;
+                const reviewList = document.getElementById('review-list');
+                const reviewSection = document.getElementById('review-section');
+                reviewList.innerHTML = '';
+
+                // Sort topics by most missed
+                const sortedTopics = Object.entries(tracker)
+                    .sort((a, b) => b[1] - a[1]) // Sort by count descending
+                    .slice(0, 3); // Top 3 weak areas
+
+                if (sortedTopics.length > 0) {
+                    reviewSection.classList.remove('hidden');
+                    sortedTopics.forEach(([topic, count]) => {
+                        const li = document.createElement('li');
+                        li.className = "flex justify-between items-center bg-slate-800 p-3 rounded-lg border border-slate-700 shadow-sm";
+                        li.innerHTML = `<span class="font-bold text-indigo-300 truncate mr-2">${topic}</span> <span class="bg-rose-500/20 text-rose-300 px-2 py-1 rounded text-xs font-black uppercase">${count} Missed</span>`;
+                        reviewList.appendChild(li);
+                    });
+                } else {
+                    reviewSection.classList.add('hidden'); // Perfect game
+                }
+                // ------------------------------------
+
                 if (victory) {
                     icon.innerHTML = '<i class="fas fa-trophy text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]"></i>';
                     title.innerText = "VICTORY!";
@@ -701,7 +744,7 @@
                     icon.innerHTML = '<i class="fas fa-skull text-slate-600"></i>';
                     title.innerText = "GAME OVER";
                     title.className = "text-5xl font-black mb-2 text-slate-500 uppercase italic";
-                    msg.innerText = "Better luck next time.";
+                    msg.innerText = "Review the topics below!";
                 }
             }
         };
