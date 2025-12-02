@@ -658,7 +658,7 @@
         ],
         "correct": 0,
         "rationale": "PPO is the standard on-policy RL algorithm used in RLHF. It constrains the update step to prevent the policy from changing too drastically at once[cite: 3297]."
-    }
+    },
     {
         "topic": "Lec 4: Language Models",
         "text": "What is the <b>Markov Assumption</b> in traditional N-gram language models?",
