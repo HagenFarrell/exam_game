@@ -659,4 +659,424 @@
         "correct": 0,
         "rationale": "PPO is the standard on-policy RL algorithm used in RLHF. It constrains the update step to prevent the policy from changing too drastically at once[cite: 3297]."
     }
+    {
+        "topic": "Lec 4: Language Models",
+        "text": "What is the <b>Markov Assumption</b> in traditional N-gram language models?",
+        "options": [
+            "The probability of the next word depends only on a fixed window of previous words",
+            "The probability of the next word depends on the entire history of the document",
+            "The words are statistically independent of each other",
+            "The future words influence the past words"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "The Markov Assumption simplifies modeling by assuming the future ($x_{t+1}$) depends only on a short history ($x_{t-n+1}...x_t$), not the whole sequence[cite: 4]."
+    },
+    {
+        "topic": "Lec 4: RNNs",
+        "text": "Why is training standard RNNs difficult over long sequences?",
+        "options": [
+            "Gradients vanish or explode due to repeated matrix multiplication",
+            "They require too much memory compared to Transformers",
+            "They cannot handle variable length sequences",
+            "They are restricted to fixed-size inputs"
+        ],
+        "correct": 0,
+        "rationale": "In standard RNNs, the gradient flows through the same weight matrix $W_h$ repeatedly during backpropagation through time. [cite_start]If eigenvalues are < 1, gradients vanish; if > 1, they explode[cite: 29]."
+    },
+    {
+        "topic": "Lec 4: LSTMs",
+        "text": "Which component of an LSTM is primarily responsible for preventing Vanishing Gradients?",
+        "options": [
+            "The Forget Gate",
+            "The Output Gate",
+            "The Tanh Activation",
+            "The Hidden State"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "The Forget Gate allows the LSTM to pass the cell state $C_{t-1}$ through to $C_t$ with a weight near 1.0, creating a 'gradient highway' that prevents decay[cite: 32]."
+    },
+    {
+        "topic": "Lec 4: Evaluation",
+        "text": "What is <b>Perplexity</b> in language modeling?",
+        "options": [
+            "The inverse probability of the test set, normalized by the number of words",
+            "The accuracy of the next token prediction",
+            "The total cross-entropy loss",
+            "The time it takes to generate a token"
+        ],
+        "correct": 0,
+        "rationale": "Perplexity is defined as $PP(W) = P(w_1...w_N)^{-1/N}$. [cite_start]Intuitively, it represents the 'weighted average branching factor'—the number of words the model is confused between[cite: 17]."
+    },
+    {
+        "topic": "Lec 6: SSL (MAE)",
+        "text": "Why does Masked Autoencoding (MAE) use a very high masking ratio (e.g., 75%) compared to BERT (15%)?",
+        "options": [
+            "To force the model to learn holistic semantic representations rather than local interpolation",
+            "To speed up training by processing fewer pixels",
+            "Because images have less information than text",
+            "To prevent the model from overfitting to colors"
+        ],
+        "correct": 0,
+        "rationale": "Images have high spatial redundancy. If you mask only 15%, the model can easily solve the task by interpolating from neighbors without understanding the object. [cite_start]75% forces high-level understanding [cite: 13-14]."
+    },
+    {
+        "topic": "Lec 6: SSL (MoCo)",
+        "text": "In Momentum Contrast (MoCo), what is the purpose of the <b>Momentum Encoder</b>?",
+        "options": [
+            "To maintain a consistent dictionary of negative keys without doing backprop on them",
+            "To speed up the query encoder updates",
+            "To augment the images dynamically",
+            "To calculate the classification loss"
+        ],
+        "correct": 0,
+        "rationale": "MoCo uses a queue of keys encoded by a slowly updating (momentum) network. [cite_start]This allows a large stream of consistent negative samples without the cost of updating the key encoder via backprop every step[cite: 41]."
+    },
+    {
+        "topic": "Lec 8: Prompting",
+        "text": "What is <b>Chain-of-Thought (CoT)</b> prompting?",
+        "options": [
+            "Prompting the model to generate intermediate reasoning steps before the answer",
+            "Connecting multiple models together in a chain",
+            "Fine-tuning the model on logic puzzles",
+            "Using a chain of if-else statements in the prompt"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "CoT encourages the model to decompose complex problems into intermediate steps (e.g., 'Let's think step by step'), which significantly improves performance on reasoning tasks[cite: 19]."
+    },
+    {
+        "topic": "Lec 8: Prompting",
+        "text": "What is <b>Self-Consistency</b> in complex reasoning?",
+        "options": [
+            "Sampling multiple reasoning paths and taking a majority vote for the answer",
+            "Forcing the model to check its own work",
+            "Training the model to be consistent with human labels",
+            "Using a temperature of 0.0 to ensure deterministic outputs"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "Self-consistency involves sampling a diverse set of reasoning paths (using non-zero temperature) and selecting the most consistent final answer from the group[cite: 23]."
+    },
+    {
+        "topic": "Lec 8: Prompting",
+        "text": "What is the difference between <b>Soft Prompts</b> (Prompt Tuning) and <b>Hard Prompts</b>?",
+        "options": [
+            "Soft Prompts are learnable continuous vectors; Hard Prompts are discrete text tokens",
+            "Soft Prompts are written by humans; Hard Prompts are written by AI",
+            "Soft Prompts are used for generation; Hard Prompts for classification",
+            "Soft Prompts update all model weights; Hard Prompts update none"
+        ],
+        "correct": 0,
+        "rationale": "Hard prompts are discrete words (e.g., 'Translate:'). [cite_start]Soft prompts are learnable tensors prepended to the embedding layer that optimize task performance without changing model weights[cite: 39]."
+    },
+    {
+        "topic": "Lec 8: Emergence",
+        "text": "What are <b>Emergent Abilities</b> in Large Language Models?",
+        "options": [
+            "Abilities that appear suddenly only after the model reaches a certain scale",
+            "Abilities that are explicitly programmed into the model",
+            "Abilities that degrade as the model gets larger",
+            "Abilities found only in small, efficient models"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "Emergent abilities (like arithmetic or CoT) are not present in smaller models but appear discontinuously once the model parameters or training compute pass a critical threshold[cite: 46]."
+    },
+    {
+        "topic": "Lec 10: RL Basics",
+        "text": "What defines the <b>Markov Property</b> in Reinforcement Learning?",
+        "options": [
+            "The future depends only on the current state, not the history",
+            "The future is completely random",
+            "The state space must be discrete",
+            "The reward is always immediate"
+        ],
+        "correct": 0,
+        "rationale": "A state $S_t$ is Markov if it contains all relevant information from the history. [cite_start]Mathematically, $P(S_{t+1} | S_t) = P(S_{t+1} | S_1, ..., S_t)$[cite: 17]."
+    },
+    {
+        "topic": "Lec 10: RL Basics",
+        "text": "What is the difference between the <b>Value Function</b> $V(s)$ and the <b>Q-Function</b> $Q(s, a)$?",
+        "options": [
+            "V(s) is the value of a state; Q(s, a) is the value of taking action 'a' in state 's'",
+            "V(s) determines the policy; Q(s, a) determines the reward",
+            "V(s) is for continuous actions; Q(s, a) is for discrete actions",
+            "They are identical terms for the same concept"
+        ],
+        "correct": 0,
+        "rationale": "$V_{\\pi}(s)$ is the expected return starting from state $s$. [cite_start]$Q_{\\pi}(s,a)$ is the expected return starting from state $s$, taking action $a$, and then following policy $\\pi$[cite: 30]."
+    },
+    {
+        "topic": "Lec 11: RL Algorithms",
+        "text": "What characterizes <b>Off-Policy</b> learning (e.g., Q-Learning)?",
+        "options": [
+            "The agent learns from data generated by a different policy (e.g., old data)",
+            "The agent only learns from data generated by the current policy",
+            "The agent does not use a policy at all",
+            "The agent learns without a reward function"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "Off-policy algorithms can update the target policy using data collected by a behavior policy (often stored in a Replay Buffer), improving sample efficiency[cite: 17]."
+    },
+    {
+        "topic": "Lec 11: Policy Gradient",
+        "text": "What is the <b>Policy Gradient Theorem</b> used for?",
+        "options": [
+            "To estimate the gradient of the expected reward with respect to policy parameters",
+            "To calculate the exact value of a state",
+            "To ensure the policy always takes the greedy action",
+            "To converting Q-values into V-values"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "It provides a way to calculate $\\nabla J(\\theta)$ (gradient of performance) by sampling trajectories, enabling optimization of non-differentiable reward functions via gradient ascent[cite: 43]."
+    },
+    {
+        "topic": "Lec 3: CNN Architectures",
+        "text": "Why are sequences of 3x3 convolutions preferred over large single convolutions (e.g., 7x7)?",
+        "options": [
+            "They have fewer parameters and more non-linearities",
+            "They cover a smaller receptive field",
+            "They are faster to compute on CPUs",
+            "They remove the need for pooling"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "A stack of three 3x3 convs has the same receptive field as a 7x7 (7x7 pixels), but with fewer parameters ($3 \\times 3^2$ vs $7^2$) and more non-linear activations in between[cite: 55]."
+    },
+    {
+        "topic": "Lec 5: Transformers",
+        "text": "What is the purpose of the <b>Encoder</b> in the original Transformer architecture?",
+        "options": [
+            "To process the input sequence and generate context representations",
+            "To generate the output sequence autoregressively",
+            "To compress the input into a single vector",
+            "To classify the sentiment of the text"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "The Encoder maps the input sequence to a sequence of continuous representations ($z$), which holds the context for the Decoder to attend to[cite: 13]."
+    },
+    {
+        "topic": "Lec 5: Efficiency",
+        "text": "What is the computational bottleneck of the Transformer for very long sequences?",
+        "options": [
+            "The quadratic memory/time complexity of Self-Attention",
+            "The size of the Feed Forward Network",
+            "The number of layers in the model",
+            "The embedding lookup table"
+        ],
+        "correct": 0,
+        "rationale": "Self-attention requires computing an $N \\times N$ matrix. [cite_start]As sequence length $N$ increases, memory and compute grow by $N^2$, making long contexts expensive[cite: 98]."
+    },
+    {
+        "topic": "Lec 9: RLHF",
+        "text": "In RLHF, why do we typically freeze the SFT model parameters when initializing the Reference Model?",
+        "options": [
+            "To provide a stable baseline for calculating the KL penalty",
+            "To save memory on the GPU",
+            "Because the SFT model is already perfect",
+            "To prevent the reward model from changing"
+        ],
+        "correct": 0,
+        "rationale": "The Reference Model ($p^{PT}$) is usually the static SFT model. [cite_start]We compare the active RL policy against it to compute the KL divergence penalty[cite: 36]."
+    },
+    {
+        "topic": "Lec 11: Exploration",
+        "text": "What is the <b>Epsilon-Greedy</b> strategy?",
+        "options": [
+            "Choosing a random action with probability epsilon, and the best action otherwise",
+            "Always choosing the best action",
+            "Always choosing a random action",
+            "Choosing actions based on a softmax distribution"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "Epsilon-greedy is a simple exploration strategy: with probability $\\epsilon$ explore (random action), and with probability $1-\\epsilon$ exploit (greedy action)[cite: 22]."
+    },
+    {
+        "topic": "Lec 6: SSL",
+        "text": "What is a <b>Pretext Task</b> in Self-Supervised Learning?",
+        "options": [
+            "A task designed to force the model to learn features without human labels",
+            "The final downstream classification task",
+            "A task performed by human annotators",
+            "A method to clean the dataset"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "Pretext tasks (like predicting the next word, or rotation prediction) are auto-generated from the data itself to provide a training signal for learning representations[cite: 5]."
+    },
+    {
+        "topic": "Lec 9: DPO",
+        "text": "In DPO, how is the 'implicit reward' calculated?",
+        "options": [
+            "Using the log-ratio of the policy likelihood to the reference likelihood",
+            "Using a separate neural network regressor",
+            "Using the BLEU score of the output",
+            "Using the squared error of the prediction"
+        ],
+        "correct": 0,
+        "rationale": "DPO derives the reward implicitly as $R(x,y) = \\beta \\log (\\pi(y|x) / \\pi_{ref}(y|x))$. [cite_start]It uses the model's own probabilities as the reward signal[cite: 53]."
+    },
+    {
+        "topic": "Lec 3: CNNs",
+        "text": "What is <b>Translation Equivariance</b>?",
+        "options": [
+            "If the input shifts, the output feature map shifts by the same amount",
+            "If the input shifts, the output remains exactly the same",
+            "If the input rotates, the output rotates",
+            "The output is independent of the input position"
+        ],
+        "correct": 0,
+        "rationale": "Equivariance means $f(g(x)) = g(f(x))$. [cite_start]For conv layers, shifting the input image shifts the activation map correspondingly (unlike Invariance, which is achieved by pooling)[cite: 22]."
+    },
+    {
+        "topic": "Lec 5: Positional Encoding",
+        "text": "Why does the Sinusoidal Positional Encoding use different frequencies?",
+        "options": [
+            "To allow the model to attend to relative positions at different scales",
+            "To make the encoding look like a wave",
+            "To compress the input data",
+            "To encrypt the token positions"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "Using a geometric progression of frequencies allows the model to easily learn to attend by relative positions (linear functions of phase shifts)[cite: 24]."
+    },
+    {
+        "topic": "Lec 9: Optimization",
+        "text": "Why is <b>AdamW</b> preferred over Adam for training LLMs?",
+        "options": [
+            "It decouples weight decay from the gradient update",
+            "It has a faster learning rate",
+            "It uses less memory",
+            "It removes the need for momentum"
+        ],
+        "correct": 0,
+        "rationale": "Standard Adam implements L2 regularization incorrectly. [cite_start]AdamW decouples weight decay, applying it directly to the weights, which improves generalization[cite: 39]."
+    },
+    {
+        "topic": "Lec 10: RL Basics",
+        "text": "What is the <b>Credit Assignment Problem</b> in RL?",
+        "options": [
+            "Determining which past action is responsible for a current reward",
+            "Determining how much to pay the human labelers",
+            "Assigning weights to the neural network layers",
+            "Deciding which state to start in"
+        ],
+        "correct": 0,
+        "rationale": "In RL, rewards are often sparse and delayed. [cite_start]Credit assignment is the challenge of figuring out *which* of the many actions taken previously actually caused the reward[cite: 8]."
+    },
+    {
+        "topic": "Lec 5: Attention",
+        "text": "What is <b>Global Attention</b> vs <b>Local Attention</b>?",
+        "options": [
+            "Global attends to all tokens; Local attends to a window of neighbors",
+            "Global is for training; Local is for inference",
+            "Global uses all heads; Local uses one head",
+            "Global is slow; Local is inaccurate"
+        ],
+        "correct": 0,
+        "rationale": "Global attention (standard) computes interactions between all pairs. [cite_start]Local attention (like Sliding Window) restricts interactions to nearby tokens to save compute[cite: 98]."
+    },
+    {
+        "topic": "Lec 9: Alignment",
+        "text": "What is the 'Helpful vs Harmless' trade-off?",
+        "options": [
+            "Models that refuse to answer unsafe questions might become less helpful",
+            "Harmless models are always helpful",
+            "Helpful models are always harmless",
+            "There is no trade-off"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "Aggressive safety filtering (Harmlessness) can lead to 'false refusals' where the model refuses to answer benign questions, reducing Helpfulness[cite: 24]."
+    },
+    {
+        "topic": "Lec 4: RNNs",
+        "text": "What is <b>Backpropagation Through Time (BPTT)</b>?",
+        "options": [
+            "Unrolling the RNN over time steps and applying backprop",
+            "Training the RNN in reverse order",
+            "Predicting the future from the past",
+            "Using a transformer to train an RNN"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "BPTT involves 'unrolling' the recurrent loop into a deep feedforward network structure and backpropagating errors through the time steps[cite: 54]."
+    },
+    {
+        "topic": "Lec 11: RL Algorithms",
+        "text": "What is the main benefit of using a <b>Replay Buffer</b> in DQN?",
+        "options": [
+            "It breaks correlations between consecutive samples",
+            "It increases the reward",
+            "It makes the model on-policy",
+            "It removes the need for a target network"
+        ],
+        "correct": 0,
+        "rationale": "Consecutive samples in RL are highly correlated. [cite_start]Storing them in a buffer and sampling randomly breaks these correlations, stabilizing training[cite: 32]."
+    },
+    {
+        "topic": "Lec 9: Data",
+        "text": "What is the 'Digital Sweatshop' concern in RLHF?",
+        "options": [
+            "Reliance on low-wage overseas workers for labeling",
+            "Using AI to label data",
+            "Training models on GPUs",
+            "The high cost of electricity"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "Much of the human preference data for RLHF is generated by workers in the Global South paid very low wages, raising ethical concerns[cite: 57]."
+    },
+    {
+        "topic": "Lec 8: Prompting",
+        "text": "What is <b>Least-to-Most</b> prompting?",
+        "options": [
+            "Breaking a problem into subproblems and solving them sequentially",
+            "Starting with the easiest examples in the dataset",
+            "Asking the model to sort the answer",
+            "Using the smallest model first"
+        ],
+        "correct": 0,
+        "rationale": "Least-to-Most prompting explicitly asks the model to decompose a complex problem into sub-questions and solve them in order to build up the final answer."
+    },
+    {
+        "topic": "Lec 3: CNNs",
+        "text": "What happens if you use a Stride of 1 and 'Same' Padding?",
+        "options": [
+            "The output spatial dimension remains the same as the input",
+            "The output is smaller",
+            "The output is larger",
+            "The image is flipped"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "'Same' padding adds enough zeros to ensure that with a stride of 1, the output width/height matches the input width/height[cite: 97]."
+    },
+    {
+        "topic": "Lec 5: Attention",
+        "text": "What is the <b>Query</b> vector conceptually analogous to?",
+        "options": [
+            "What the current token is looking for",
+            "What the current token contains",
+            "The actual content to be retrieved",
+            "The position of the token"
+        ],
+        "correct": 0,
+        "rationale": "The Query represents the current token's 'search intent'. It is compared against Keys to find relevant information."
+    },
+    {
+        "topic": "Lec 9: Models",
+        "text": "What distinguishes <b>CodeLlama</b> from standard Llama?",
+        "options": [
+            "It is finetuned specifically on code datasets",
+            "It uses a different architecture",
+            "It is a closed source model",
+            "It only understands Python"
+        ],
+        "correct": 0,
+        [cite_start]"rationale": "CodeLlama is a version of Llama further pre-trained and fine-tuned on code-specific datasets to enhance programming capabilities[cite: 104]."
+    },
+    {
+        "topic": "Lec 6: SSL",
+        "text": "In Contrastive Learning, what is the role of <b>Negative Pairs</b>?",
+        "options": [
+            "To prevent the model from outputting a constant solution (Collapse)",
+            "To increase the dataset size",
+            "To make the model learn colors",
+            "To reduce the training time"
+        ],
+        "correct": 0,
+        "rationale": "Without negatives, the loss is minimized by making all outputs identical. [cite_start]Negatives force the model to push dissimilar items apart in the embedding space[cite: 20]."
+    }
 ]
