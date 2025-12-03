@@ -1,663 +1,255 @@
 [
     {
-        "topic": "Review: CNNs",
-        "text": "<b>[Must Know]</b> Why are CNNs considered more parameter efficient than Fully Connected (FC) layers?",
+        "topic": "Exam Priority: Regression",
+        "text": "<b>[Must Know]</b> What is the Loss Function for <b>Linear Regression</b> vs <b>Logistic Regression</b>?",
         "options": [
-            "Weight Sharing: A filter is reused across the entire image",
-            "Dropout: They drop connections randomly",
-            "Pooling: They reduce the dimensionality early",
-            "They use fewer layers than FC networks"
+            "Linear: Mean Squared Error (MSE) | Logistic: Binary Cross Entropy",
+            "Linear: Cross Entropy | Logistic: MSE",
+            "Linear: Hinge Loss | Logistic: Kullback-Leibler",
+            "Linear: MSE | Logistic: MSE"
         ],
         "correct": 0,
-        "rationale": "In an FC layer, every input connects to every neuron. In a CNN, a single kernel (e.g., 5x5) is shared across the whole spatial input, drastically reducing parameters [cite: 9-10]."
+        "rationale": "Linear regression predicts real values (output -inf to +inf) using MSE. Logistic predicts probabilities (0 to 1) using Binary Cross Entropy[cite: 1]."
     },
     {
-        "topic": "Review: CNN Math",
-        "text": "<b>[Must Know]</b> What is the correct formula for the output spatial dimension of a Conv Layer?",
+        "topic": "Exam Priority: CNNs",
+        "text": "<b>[Must Know]</b> Compare Convolutional layers and Fully Connected (FC) layers in terms of <b>Parameter Efficiency</b>.",
         "options": [
-            "$$ \\lfloor \\frac{H_{in} - K + 2P}{S} \\rfloor + 1 $$",
-            "$$ (H_{in} - K) \\times S + P $$",
-            "$$ \\frac{H_{in} + K}{S} - 2P $$",
-            "$$ H_{in} - K + 2P + S $$"
+            "Conv layers are more efficient due to Weight Sharing and Sparse Connectivity",
+            "FC layers are more efficient because they use simple matrix multiplication",
+            "Conv layers use more parameters because of the filters",
+            "They have roughly the same efficiency"
         ],
         "correct": 0,
-        "rationale": "You take input height, subtract kernel size, add padding (both sides), divide by stride, floor it, and add 1[cite: 12]."
+        "rationale": "A Conv filter reuses the same parameters across the entire image (Weight Sharing), whereas an FC layer requires a unique weight for every single input-output connection[cite: 1]."
     },
     {
-        "topic": "Review: Transformers",
-        "text": "<b>[Must Know]</b> Why is <b>Layer Norm</b> used in NLP Transformers instead of Batch Norm?",
+        "topic": "Exam Priority: Transformers",
+        "text": "<b>[Must Know]</b> What is the specific role of <b>Layer Normalization</b> in Transformers vs Batch Norm?",
         "options": [
-            "Sentence lengths vary, making batch statistics unreliable",
-            "It is computationally cheaper",
-            "Batch Norm causes exploding gradients in RNNs",
-            "Layer Norm adds positional information"
+            "LN normalizes across the feature dimension for each token (independent of batch size)",
+            "LN normalizes across the batch dimension (dependent on batch size)",
+            "LN adds noise to the training process",
+            "LN is only used in the Decoder"
         ],
         "correct": 0,
-        "rationale": "In NLP, batch statistics are noisy due to varying sequence lengths and small batch sizes. Layer Norm normalizes across the feature dimension for a single sample, independent of the batch [cite: 33-34]."
+        "rationale": "Batch Norm is unstable in NLP because sentence lengths vary and batches are small. Layer Norm works per-sample, making it robust for sequence modeling[cite: 1]."
     },
     {
-        "topic": "Review: Transformers",
-        "text": "<b>[Must Know]</b> What is the primary purpose of <b>Residual Connections</b> ($$ x + f(x) $$)?",
+        "topic": "Exam Priority: Transformers",
+        "text": "<b>[Must Know]</b> What is the purpose of <b>Residual Connections</b> in Transformers?",
         "options": [
-            "To solve vanishing gradients by providing a signal 'highway'",
-            "To increase the number of parameters",
-            "To combine the Encoder and Decoder",
-            "To normalize the input"
+            "To allow gradients to flow through the network (solving vanishing gradients)",
+            "To compress the model size",
+            "To increase the non-linearity",
+            "To combine the Query and Key vectors"
         ],
         "correct": 0,
-        "rationale": "Residuals allow gradients to flow through the network without passing through non-linearities, mitigating the vanishing gradient problem in deep networks[cite: 35]."
+        "rationale": "Residuals ($x + f(x)$) create a 'highway' for gradients to propagate backwards to early layers without being attenuated by non-linearities[cite: 1]."
     },
     {
-        "topic": "Review: SSL",
-        "text": "<b>[Must Know]</b> What is the 'Collapse Problem' in Self-Supervised Learning?",
+        "topic": "Exam Priority: SSL",
+        "text": "<b>[Must Know]</b> Compare <b>MAE</b> (Masked Autoencoding) and <b>Contrastive Learning</b> goals.",
         "options": [
-            "The model outputs a constant vector for all inputs to minimize distance",
-            "The model stops training early",
-            "The gradients become zero immediately",
-            "The model memorizes the training data"
+            "MAE: Reconstruction (predict pixels) | Contrastive: Discrimination (distinguish views)",
+            "MAE: Discrimination | Contrastive: Reconstruction",
+            "MAE: Clustering | Contrastive: Generation",
+            "MAE: RLHF | Contrastive: Supervised"
         ],
         "correct": 0,
-        "rationale": "Without negative pairs (in contrastive learning), the model can 'cheat' by outputting the exact same representation for every image, making the distance zero[cite: 58]."
+        "rationale": "MAE masks parts of the input and tries to rebuild them (Generative/Local features). Contrastive learning pulls augmentations of the same image together (Discriminative/Global features)[cite: 1]."
     },
     {
-        "topic": "Review: SSL",
-        "text": "<b>[Must Know]</b> How does SimCLR define a 'Positive Pair'?",
+        "topic": "Exam Priority: SSL",
+        "text": "<b>[Must Know]</b> In <b>Contrastive Learning</b>, how do we construct a 'Positive Pair'?",
         "options": [
-            "Two augmentations (crops/colors) of the same image",
-            "Two images from the same class",
+            "Two different augmentations (crops/colors) of the same image",
             "An image and its label",
-            "An image and a random image from the batch"
+            "Two images from the same class",
+            "An image and a random patch"
         ],
         "correct": 0,
-        "rationale": "SimCLR treats two different views (augmentations) of the same source image as a positive pair that should be pulled together[cite: 55]."
+        "rationale": "A positive pair consists of two views of the same source instance. Negative pairs are views of *different* instances[cite: 1]."
     },
     {
-        "topic": "Review: Scaling",
-        "text": "<b>[Must Know]</b> What did the <b>Chinchilla</b> scaling laws demonstrate about compute optimality?",
+        "topic": "Exam Priority: SSL",
+        "text": "<b>[Must Know]</b> How does Masking help in <b>NLP</b> vs <b>CV</b>?",
         "options": [
-            "Model size (N) and Data size (D) should be scaled equally",
-            "Model size is much more important than Data size",
-            "Data size is the only thing that matters",
-            "Training longer is always better than a larger model"
+            "NLP: Context understanding (Bidirectional) | CV: Feature representation (Global structure)",
+            "NLP: Grammar correction | CV: Color correction",
+            "NLP: Text generation | CV: Image generation",
+            "NLP: None | CV: None"
         ],
         "correct": 0,
-        "rationale": "Chinchilla proved that for optimal compute usage, you must scale Parameters (N) and Data (D) in roughly equal proportions[cite: 79]."
+        "rationale": "In NLP (BERT), masking forces the model to use bidirectional context. In CV (MAE), high masking ratios force the model to learn global shapes rather than local textures[cite: 1]."
     },
     {
-        "topic": "Review: Tuning",
-        "text": "<b>[Must Know]</b> What is a <b>Soft Prompt</b> in Prompt Tuning?",
+        "topic": "Exam Priority: Prompting",
+        "text": "<b>[Must Know]</b> Compare <b>Soft Prompting</b> vs <b>Hard Prompting</b> regarding optimization.",
         "options": [
-            "Learnable continuous vectors prepended to the input",
-            "Human-written text instructions",
-            "Discrete tokens selected by the model",
-            "Random noise added to the input"
+            "Soft: Continuous differentiable embeddings | Hard: Discrete text tokens",
+            "Soft: Human readable | Hard: Machine code",
+            "Soft: Discrete tokens | Hard: Continuous embeddings",
+            "Soft: Updates model weights | Hard: Freezes model weights"
         ],
         "correct": 0,
-        "rationale": "Soft prompts are learnable vectors (virtual tokens) that are optimized via backprop, unlike hard prompts which are fixed discrete words[cite: 75]."
+        "rationale": "Soft prompts are learnable vectors added to the input embedding space (differentiable). Hard prompts are fixed text strings chosen by humans (non-differentiable)[cite: 1]."
     },
     {
-        "topic": "Review: Alignment",
-        "text": "<b>[Must Know]</b> What is the key difference between <b>DPO</b> and <b>RLHF</b>?",
+        "topic": "Exam Priority: ICL",
+        "text": "<b>[Must Know]</b> What is a major weakness of <b>In-Context Learning (ICL)</b>?",
         "options": [
-            "DPO removes the separate Reward Model training step",
-            "DPO uses a more complex Reward Model",
-            "DPO requires more GPU memory",
-            "DPO is less stable than PPO"
+            "No performance guarantee & sensitive to prompt format/order",
+            "Requires expensive gradient updates",
+            "Requires a huge dataset for fine-tuning",
+            "Cannot handle few-shot examples"
         ],
         "correct": 0,
-        "rationale": "DPO mathematically derives the optimal policy directly from preference data, eliminating the need to train a proxy Reward Model and use PPO[cite: 97]."
+        "rationale": "ICL does not update weights, so it can be unstable—changing the order of examples in the prompt can drastically change the output. It also has limited context length[cite: 1]."
     },
     {
-        "topic": "Review: Alignment",
-        "text": "<b>[Must Know]</b> In DPO, what does the loss function try to do?",
+        "topic": "Exam Priority: Tuning",
+        "text": "<b>[Must Know]</b> How does <b>Instruction Tuning</b> differ from <b>In-Context Learning</b> regarding model updates?",
         "options": [
-            "Increase likelihood of winning responses relative to the reference model",
-            "Minimize the MSE between the reward and the output",
-            "Maximize the entropy of the policy",
-            "Clone the behavior of the SFT model"
+            "Instruction Tuning updates weights; ICL does not",
+            "ICL updates weights; Instruction Tuning does not",
+            "Both update weights",
+            "Neither updates weights"
         ],
         "correct": 0,
-        "rationale": "DPO increases the probability of the 'winning' response and decreases the 'losing' response, weighted by an implicit reward estimate[cite: 100]."
+        "rationale": "Instruction tuning is a form of Supervised Fine-Tuning (gradient descent). ICL is purely inference-time conditioning[cite: 1]."
     },
     {
-        "topic": "Review: RL",
-        "text": "<b>[Must Know]</b> Which RL algorithm class is considered the <b>least</b> sample efficient?",
+        "topic": "Exam Priority: Scaling",
+        "text": "<b>[Must Know]</b> How do <b>Scaling Laws</b> guide resource allocation?",
         "options": [
-            "Evolutionary / Random Guessing",
-            "On-Policy (PPO)",
-            "Off-Policy (Q-Learning)",
-            "Model-Based"
+            "They identify the optimal balance between Model Size, Dataset Size, and Compute",
+            "They tell us to always make the model bigger",
+            "They tell us to always add more data",
+            "They predict the exact loss for any architecture"
         ],
         "correct": 0,
-        "rationale": "Evolutionary strategies do not use gradients or past data effectively, making them the lowest on the efficiency hierarchy[cite: 111]."
+        "rationale": "Scaling laws (Chinchilla) allow researchers to predict performance and allocate budget efficiently, avoiding 'oversizing' the model relative to the data[cite: 1]."
     },
     {
-        "topic": "Review: RL",
-        "text": "<b>[Must Know]</b> In Policy Gradient, why do we subtract a <b>baseline (b)</b>?",
+        "topic": "Exam Priority: RL",
+        "text": "<b>[Must Know]</b> Why do Gradient methods in RL often have <b>High Variance</b>?",
         "options": [
-            "To reduce variance without introducing bias",
-            "To ensure the gradients are always positive",
-            "To increase the learning rate",
-            "To calculate the Value function"
+            "Due to the high variance of rewards in the trajectory",
+            "Because the learning rate is too high",
+            "Because the models are too deep",
+            "Because of the KL penalty"
         ],
         "correct": 0,
-        "rationale": "Subtracting a baseline (like average reward) centers the returns, reducing the variance of the gradient estimator and speeding up convergence[cite: 115]."
+        "rationale": "Monte Carlo estimates of the gradient rely on sampling entire trajectories. The rewards along these trajectories can vary wildly, leading to noisy gradients[cite: 1]."
     },
     {
-        "topic": "Review: CNNs",
-        "text": "<b>[Must Know]</b> What does a <b>Stride</b> of 2 do to the output dimensions?",
+        "topic": "Exam Priority: RL",
+        "text": "<b>[Must Know]</b> How do we achieve <b>Variance Reduction</b> in RL Policy Gradients?",
         "options": [
-            "It effectively downsamples the spatial resolution by half",
-            "It doubles the spatial resolution",
-            "It keeps resolution same but doubles channels",
-            "It has no effect on resolution"
+            "By subtracting a Baseline from the reward",
+            "By increasing the batch size",
+            "By using a larger model",
+            "By removing the discount factor"
         ],
         "correct": 0,
-        "rationale": "A higher stride means the filter skips pixels, reducing the output size. Stride 2 roughly halves the height and width[cite: 14]."
+        "rationale": "Subtracting a baseline (like the average reward) centers the returns, reducing the variance of the gradient estimator without introducing bias[cite: 1]."
     },
     {
-        "topic": "Review: CNNs",
-        "text": "<b>[Must Know]</b> What is <b>Translation Invariance</b> in the context of CNNs?",
+        "topic": "Exam Priority: Alignment",
+        "text": "<b>[Must Know]</b> What is the mathematical advantage of <b>DPO</b> over RLHF?",
         "options": [
-            "A feature (like an eye) is detected regardless of where it is in the image",
-            "The model output is invariant to rotation",
-            "The model works on different image sizes",
-            "The weights are invariant to initialization"
+            "It optimizes the policy analytically without a separate Reward Model",
+            "It uses a more accurate Reward Model",
+            "It allows for larger batch sizes",
+            "It does not require preference data"
         ],
         "correct": 0,
-        "rationale": "Weight sharing assumes translation invariance: a visual feature is useful to detect regardless of its x,y position in the image[cite: 17]."
+        "rationale": "DPO uses the Bradley-Terry model to derive a closed-form solution for the optimal policy, allowing direct optimization on preference pairs[cite: 1]."
     },
     {
-        "topic": "Review: Scaling",
-        "text": "<b>[Must Know]</b> According to Chinchilla, most LLMs before 2022 were...",
+        "topic": "Exam Priority: RL",
+        "text": "<b>[Must Know]</b> Compare <b>Sample Efficiency</b>: Model-Based vs. On-Policy vs. Off-Policy.",
         "options": [
-            "Severely undertrained (too big, not enough data)",
-            "Too small for the data available",
-            "Optimally scaled",
-            "Overfitted to the training set"
+            "Model-Based > Off-Policy > On-Policy",
+            "On-Policy > Off-Policy > Model-Based",
+            "Off-Policy > Model-Based > On-Policy",
+            "They are roughly equal"
         ],
         "correct": 0,
-        "rationale": "Chinchilla showed we used to train huge models on too little data. We should have used smaller models on much more data for compute optimality[cite: 78]."
-    },
-    {
-        "topic": "Lec 3: CNNs",
-        "text": "Which architecture popularized the use of <b>ReLU</b> and <b>Dropout</b>?",
-        "options": [
-            "AlexNet (2012)",
-            "LeNet-5 (1998)",
-            "ResNet (2015)",
-            "VGG-16"
-        ],
-        "correct": 0,
-        "rationale": "AlexNet was the breakthrough deep learning model that introduced ReLU and Dropout to prevent overfitting in deep networks[cite: 169]."
+        "rationale": "Model-Based is most efficient (simulates world). Off-Policy is medium (reuses data). On-Policy (PPO) is least efficient (throws away data after update)[cite: 1]."
     },
     {
         "topic": "Lec 3: CNNs",
-        "text": "What is the effect of a <b>1x1 Convolution</b>?",
+        "text": "What is the receptive field of a neuron in the first layer (3x3 kernel)?",
         "options": [
-            "It changes the number of channels (depth) without changing spatial size",
-            "It blurs the image",
-            "It performs downsampling",
-            "It is a no-op (does nothing)"
+            "3x3 pixels",
+            "1x1 pixels",
+            "The whole image",
+            "Depends on Stride"
         ],
         "correct": 0,
-        "rationale": "1x1 convolutions compute a dot product across the depth dimension, effectively acting as a per-pixel fully connected layer to change channel count[cite: 928]."
-    },
-    {
-        "topic": "Lec 3: CNNs",
-        "text": "If you have a 32x32x3 image and apply ten 5x5 filters with stride 1 and pad 2, what is the output volume?",
-        "options": [
-            "32x32x10",
-            "28x28x10",
-            "32x32x3",
-            "30x30x10"
-        ],
-        "correct": 0,
-        "rationale": "Formula: (32 - 5 + 2*2)/1 + 1 = 32. The spatial size is preserved, and depth becomes the number of filters (10)[cite: 868]."
-    },
-    {
-        "topic": "Lec 3: CNNs",
-        "text": "What is the number of parameters in a CONV layer with ten 5x5x3 filters?",
-        "options": [
-            "760",
-            "750",
-            "75",
-            "3072"
-        ],
-        "correct": 0,
-        "rationale": "Each filter is 5*5*3 = 75 weights + 1 bias = 76. With 10 filters, 76 * 10 = 760 parameters[cite: 880]."
-    },
-    {
-        "topic": "Lec 3: CNNs",
-        "text": "What is the main function of a <b>Pooling Layer</b>?",
-        "options": [
-            "To downsample spatial dimensions and gain invariance",
-            "To increase the depth of the network",
-            "To add non-linearity",
-            "To prevent vanishing gradients"
-        ],
-        "correct": 0,
-        "rationale": "Pooling reduces the size of the representation (downsampling) and makes the model robust to small spatial shifts[cite: 1129]."
-    },
-    {
-        "topic": "Lec 5: Attention",
-        "text": "In Self-Attention, how are attention scores calculated?",
-        "options": [
-            "Dot product of Query (Q) and Key (K)",
-            "Dot product of Value (V) and Key (K)",
-            "Addition of Query (Q) and Value (V)",
-            "Convolution of Q and K"
-        ],
-        "correct": 0,
-        "rationale": "Attention scores are derived by taking the dot product of the Query vector with the Key vectors of the sequence[cite: 1238]."
-    },
-    {
-        "topic": "Lec 5: Architecture",
-        "text": "Which model uses a <b>Decoder-Only</b> architecture?",
-        "options": [
-            "GPT",
-            "BERT",
-            "T5",
-            "BART"
-        ],
-        "correct": 0,
-        "rationale": "GPT models are autoregressive (predict next token) and use only the decoder stack. BERT is encoder-only; T5 is encoder-decoder[cite: 1343]."
-    },
-    {
-        "topic": "Lec 5: Embeddings",
-        "text": "What is <b>RoPE</b> (Rotary Positional Encoding)?",
-        "options": [
-            "A relative encoding that rotates query/key vectors",
-            "An absolute sinusoidal encoding added to inputs",
-            "A learned embedding layer",
-            "A method to randomize token positions"
-        ],
-        "correct": 0,
-        "rationale": "RoPE encodes relative position by rotating the Q and K vectors in the embedding space using trigonometry[cite: 1556]."
-    },
-    {
-        "topic": "Lec 5: Attention",
-        "text": "Why do we scale the dot product by $$ 1/\\sqrt{d_k} $$ in Scaled Dot-Product Attention?",
-        "options": [
-            "To prevent gradients from vanishing in the Softmax",
-            "To reduce the memory usage",
-            "To make the calculation integer-only",
-            "To normalize the batch statistics"
-        ],
-        "correct": 0,
-        "rationale": "As dimension d_k grows, dot products become large, pushing Softmax into regions with extremely small gradients. Scaling prevents this[cite: 1303]."
-    },
-    {
-        "topic": "Lec 5: Norm",
-        "text": "What is the difference between Pre-LN and Post-LN?",
-        "options": [
-            "Pre-LN applies normalization before the sub-layer (more stable)",
-            "Post-LN applies normalization before the sub-layer",
-            "Pre-LN is used in BERT, Post-LN in GPT",
-            "They are mathematically identical"
-        ],
-        "correct": 0,
-        "rationale": "Pre-LN puts the layer norm inside the residual block before the attention/FFN. It is generally more stable for gradient propagation in deep models[cite: 1655]."
-    },
-    {
-        "topic": "Lec 9: Tuning",
-        "text": "What did the <b>LIMA</b> paper suggest about alignment?",
-        "options": [
-            "Less Is More: A few high-quality examples are enough",
-            "We need massive RLHF datasets",
-            "Pre-training is less important than Fine-tuning",
-            "RLHF is strictly required for chat behaviors"
-        ],
-        "correct": 0,
-        "rationale": "LIMA showed that the 'Superficial Alignment Hypothesis' holds: you only need ~1000 high-quality examples to teach the model the style/format[cite: 3146]."
-    },
-    {
-        "topic": "Lec 9: RLHF",
-        "text": "In the standard RLHF pipeline (InstructGPT), what are the three steps?",
-        "options": [
-            "SFT -> Reward Modeling -> PPO",
-            "Pretraining -> SFT -> Testing",
-            "SFT -> DPO -> Evaluation",
-            "Reward Modeling -> SFT -> PPO"
-        ],
-        "correct": 0,
-        "rationale": "The standard pipeline is: 1. Supervised Fine-Tuning (SFT), 2. Train Reward Model (RM), 3. Optimize Policy via PPO[cite: 3248]."
-    },
-    {
-        "topic": "Lec 9: RLHF",
-        "text": "What is the purpose of the <b>KL Penalty</b> in RLHF?",
-        "options": [
-            "To prevent the model from drifting too far from the SFT model",
-            "To force the model to be more creative",
-            "To increase the reward score",
-            "To reduce the training time"
-        ],
-        "correct": 0,
-        "rationale": "The KL term penalizes the RL policy if it diverges too much from the reference (SFT) model, preventing 'reward hacking' (generating gibberish that scores high)[cite: 3419]."
-    },
-    {
-        "topic": "Lec 9: DPO",
-        "text": "How does DPO avoid using a separate Reward Model?",
-        "options": [
-            "It solves for the optimal policy mathematically using preference pairs",
-            "It uses GPT-4 as a judge instead",
-            "It relies on pure Supervised Learning",
-            "It uses a heuristic rule-based reward"
-        ],
-        "correct": 0,
-        "rationale": "DPO uses a closed-form solution to the RLHF objective, allowing optimization directly on the preference data without an explicit RM network[cite: 3672]."
-    },
-    {
-        "topic": "Lec 9: Data",
-        "text": "What is <b>Rejection Sampling</b> (Best-of-N) in finetuning?",
-        "options": [
-            "Sampling N outputs, using RM to pick the best, and training on that",
-            "Rejecting data that is too short",
-            "Randomly dropping weights",
-            "Using human labelers to write new answers"
-        ],
-        "correct": 0,
-        "rationale": "Rejection sampling involves generating multiple candidates from the policy, scoring them with the reward model, and treating the winner as a new ground-truth label[cite: 2044]."
-    },
-    {
-        "topic": "Lec 9: Models",
-        "text": "Which model popularized <b>Instruction Tuning</b> (finetuning on many tasks)?",
-        "options": [
-            "FLAN (Finetuned Language Net)",
-            "BERT",
-            "GPT-2",
-            "Word2Vec"
-        ],
-        "correct": 0,
-        "rationale": "FLAN demonstrated that finetuning a model on a massive mixture of tasks (converted to instructions) significantly boosts zero-shot performance[cite: 2831]."
-    },
-    {
-        "topic": "Lec 3: Activation",
-        "text": "What does the <b>ReLU</b> activation function do?",
-        "options": [
-            "max(0, x)",
-            "1 / (1 + e^-x)",
-            "tanh(x)",
-            "x if x > 0 else 0.1x"
-        ],
-        "correct": 0,
-        "rationale": "ReLU (Rectified Linear Unit) is simply max(0, x). It introduces non-linearity while being computationally efficient and avoiding vanishing gradients for positive inputs[cite: 1694]."
+        "rationale": "In the first layer, a neuron only sees the pixels immediately under its filter, so 3x3."
     },
     {
         "topic": "Lec 5: Transformers",
-        "text": "What is <b>Multi-Head Attention</b>?",
+        "text": "How does the 'Scaled Dot-Product Attention' handle the magnitude of dot products?",
         "options": [
-            "Running attention in parallel multiple times with different projections",
-            "Stacking attention layers sequentially",
-            "Using multiple models to vote on the answer",
-            "Attending to multiple documents at once"
+            "It divides by the square root of the dimension $$ \\sqrt{d_k} $$",
+            "It uses a Tanh activation function",
+            "It applies Batch Normalization",
+            "It clips gradients to 1.0"
         ],
         "correct": 0,
-        "rationale": "Multi-head attention projects Q, K, V into multiple subspaces and runs attention in parallel, allowing the model to focus on different aspects (syntax vs semantics) simultaneously[cite: 1420]."
+        "rationale": "As dimensions ($d_k$) increase, dot products grow large, pushing Softmax into regions with extremely small gradients. Scaling by $1/\\sqrt{d_k}$ counteracts this."
     },
     {
-        "topic": "Lec 5: Architecture",
-        "text": "What is the complexity of Self-Attention with respect to sequence length N?",
+        "topic": "Lec 5: Positional Encoding",
+        "text": "What is <b>RoPE</b> (Rotary Positional Embeddings)?",
         "options": [
-            "$$ O(N^2) $$",
-            "$$ O(N) $$",
-            "$$ O(N \\log N) $$",
-            "$$ O(1) $$"
+            "A relative encoding that uses rotation matrices to encode position",
+            "An absolute encoding using sinusoidal waves",
+            "A learned embedding layer added to tokens",
+            "A method to shuffle tokens randomly"
         ],
         "correct": 0,
-        "rationale": "Self-attention computes a score for every pair of tokens, resulting in an N by N matrix, hence quadratic complexity[cite: 1248]."
+        "rationale": "RoPE (used in LLaMA) encodes relative positions by rotating the query and key vectors in the embedding space, allowing the model to generalize to sequence lengths longer than seen during training."
+    },
+    {
+        "topic": "Lec 9: Instruct Tuning",
+        "text": "What did the <b>LIMA</b> (Less Is More for Alignment) paper demonstrate?",
+        "options": [
+            "1,000 high-quality instruction examples are sufficient for strong alignment",
+            "You need millions of instruction examples to align a model",
+            "RLHF is strictly necessary for all alignment tasks",
+            "Pre-training data quality does not matter"
+        ],
+        "correct": 0,
+        "rationale": "LIMA showed that the 'Superficial Alignment Hypothesis' is true: the model learns knowledge during pre-training, and instruction tuning just teaches it the specific format/style of interaction."
     },
     {
         "topic": "Lec 9: RLHF",
-        "text": "What is <b>Reward Hacking</b>?",
+        "text": "In the standard RLHF pipeline (InstructGPT), what is the function of the <b>KL Penalty</b>?",
         "options": [
-            "The agent finding a loophole to maximize reward without actual improvement",
-            "The reward model overfitting to the training data",
-            "The policy gradient vanishing to zero",
-            "Using a pre-trained reward model"
+            "To prevent the RL policy from drifting too far from the initial SFT model",
+            "To force the model to output shorter sentences",
+            "To increase the diversity of the generated text",
+            "To improve the accuracy of the Reward Model"
         ],
         "correct": 0,
-        "rationale": "Reward hacking occurs when the RL agent exploits flaws in the reward function (or model) to get high scores despite producing low-quality or nonsensical outputs[cite: 3593]."
-    },
-    {
-        "topic": "Lec 3: Pooling",
-        "text": "What happens during <b>Max Pooling</b> with a 2x2 filter and stride 2?",
-        "options": [
-            "The spatial resolution is halved",
-            "The spatial resolution is doubled",
-            "The depth is halved",
-            "The image is inverted"
-        ],
-        "correct": 0,
-        "rationale": "A 2x2 max pool with stride 2 takes the maximum value in 2x2 blocks, effectively reducing the height and width by a factor of 2[cite: 1145]."
-    },
-    {
-        "topic": "Lec 5: Embeddings",
-        "text": "Why are <b>Positional Encodings</b> necessary in Transformers?",
-        "options": [
-            "Because self-attention is permutation invariant (bag of words)",
-            "To increase the parameter count",
-            "To handle large vocabularies",
-            "They replace the bias term"
-        ],
-        "correct": 0,
-        "rationale": "Without positional encodings, a Transformer sees 'dog bit man' and 'man bit dog' as identical sets of tokens. Encodings inject order information[cite: 1497]."
+        "rationale": "Without the KL penalty, the RL algorithm would exploit flaws in the reward model (Reward Hacking) and output gibberish that scores high rewards. The penalty keeps it grounded to intelligible language."
     },
     {
         "topic": "Lec 9: Data",
-        "text": "What is <b>Self-Instruct</b>?",
+        "text": "What is a 'Rejection Sampling' approach in LLM fine-tuning (used in Llama 2)?",
         "options": [
-            "Using a strong model to generate instruction-response pairs for training",
-            "Manually writing instructions",
-            "Using the test set for training",
-            "Letting the model define its own loss"
+            "Sampling K outputs, using the Reward Model to pick the best, and fine-tuning on that",
+            "Throwing away data that is too long",
+            "Stopping training when loss increases",
+            "Using human labelers to rewrite bad answers"
         ],
         "correct": 0,
-        "rationale": "Self-Instruct involves bootstrapping a model by having a stronger model (like GPT-4) generate synthetic instructions and responses to train a smaller model[cite: 3144]."
-    },
-    {
-        "topic": "Lec 5: Training",
-        "text": "What is <b>Warmup</b> in the context of Learning Rate schedules?",
-        "options": [
-            "Linearly increasing LR from 0 at the start of training",
-            "Heating up the GPU before training",
-            "Running the model on easy data first",
-            "Initializing weights to large values"
-        ],
-        "correct": 0,
-        "rationale": "Warmup involves starting with a low learning rate and increasing it linearly. This stabilizes early training when gradients can be very large[cite: 1736]."
-    },
-    {
-        "topic": "Lec 3: CNNs",
-        "text": "In LeNet-5, what was the primary application?",
-        "options": [
-            "Digit Recognition (MNIST)",
-            "Face Detection",
-            "Object Detection (ImageNet)",
-            "Video Analysis"
-        ],
-        "correct": 0,
-        "rationale": "LeNet-5 (1998) was designed by LeCun et al. for gradient-based learning applied to document recognition, specifically digits[cite: 121]."
-    },
-    {
-        "topic": "Lec 5: Components",
-        "text": "What is the <b>Feed Forward Network (FFN)</b> in a Transformer block?",
-        "options": [
-            "Two linear layers with a non-linearity (ReLU/GELU) in between",
-            "A convolutional layer",
-            "A recurrent layer",
-            "A simple matrix multiplication"
-        ],
-        "correct": 0,
-        "rationale": "After attention, each token is processed independently by a position-wise FFN, usually consisting of an expansion layer, activation, and projection layer[cite: 1674]."
-    },
-    {
-        "topic": "Lec 9: Eval",
-        "text": "What is <b>MMLU</b>?",
-        "options": [
-            "Massive Multitask Language Understanding benchmark",
-            "A new loss function",
-            "A training dataset of code",
-            "A reinforcement learning algorithm"
-        ],
-        "correct": 0,
-        "rationale": "MMLU is a comprehensive benchmark covering 57 subjects (STEM, humanities, etc.) used to evaluate LLM knowledge and problem solving[cite: 2961]."
-    },
-    {
-        "topic": "Lec 5: Efficiency",
-        "text": "What is <b>Sliding Window Attention</b> (used in Mistral)?",
-        "options": [
-            "Attention is limited to a local window of neighboring tokens",
-            "Attention is calculated over the whole sequence",
-            "Attention weights are randomly dropped",
-            "Tokens attend only to the first token"
-        ],
-        "correct": 0,
-        "rationale": "To handle long contexts efficiently, Mistral limits attention to a fixed window size (e.g., 4096), reducing complexity from quadratic to linear[cite: 2550]."
-    },
-    {
-        "topic": "Lec 3: CNNs",
-        "text": "What defines a <b>1x1 Convolution</b> operation?",
-        "options": [
-            "It computes a weighted sum of channels at a single pixel location",
-            "It averages the neighboring pixels",
-            "It copies the input to the output",
-            "It rotates the image by 1 degree"
-        ],
-        "correct": 0,
-        "rationale": "A 1x1 conv kernel sees only one pixel but all input channels. It is essentially a dense layer applied to every pixel location independently[cite: 929]."
-    },
-    {
-        "topic": "Lec 9: Models",
-        "text": "What is the main advantage of <b>Pythia</b> models?",
-        "options": [
-            "They released intermediate checkpoints to study training dynamics",
-            "They are the largest models available",
-            "They use a mixture of experts architecture",
-            "They are trained only on code"
-        ],
-        "correct": 0,
-        "rationale": "Pythia was designed for science: they released 154 checkpoints throughout training to allow researchers to study how models learn over time[cite: 2365]."
-    },
-    {
-        "topic": "Lec 5: Scaling",
-        "text": "What does <b>FP16</b> or <b>BF16</b> refer to?",
-        "options": [
-            "Low-precision floating point formats (16-bit) to save memory",
-            "A type of model architecture",
-            "The batch size of 16",
-            "The number of attention heads"
-        ],
-        "correct": 0,
-        "rationale": "Training in 32-bit (FP32) is expensive. FP16 and BF16 (Brain Float) use 16 bits, halving memory usage and speeding up matrix math[cite: 1750]."
-    },
-    {
-        "topic": "Lec 9: DPO",
-        "text": "In DPO, what serves as the 'Label' for the loss?",
-        "options": [
-            "The preference pair ($$ y_w, y_l $$)",
-            "A scalar score from 1-10",
-            "The next token in the sequence",
-            "The BLEU score"
-        ],
-        "correct": 0,
-        "rationale": "DPO requires a dataset of pairs, where one response is marked 'winner' and the other 'loser'. It optimizes the likelihood ratio between them[cite: 3676]."
-    },
-    {
-        "topic": "Lec 3: Visualization",
-        "text": "What do early layers in a CNN typically detect?",
-        "options": [
-            "Simple edges and colors",
-            "Complete objects like cars",
-            "Text and numbers",
-            "Abstract concepts"
-        ],
-        "correct": 0,
-        "rationale": "Due to small receptive fields, early layers detect low-level features like edges/gradients. Deeper layers combine these into shapes and objects[cite: 607]."
-    },
-    {
-        "topic": "Lec 5: Norm",
-        "text": "What is <b>RMSNorm</b>?",
-        "options": [
-            "A simplified LayerNorm without mean centering or bias",
-            "A normalization using Root Mean Square Error",
-            "A batch normalization variant",
-            "A norm applied to weights only"
-        ],
-        "correct": 0,
-        "rationale": "RMSNorm (Root Mean Square Norm) simplifies LayerNorm by removing the mean calculation and bias, gaining speed while maintaining performance[cite: 1632]."
-    },
-    {
-        "topic": "Lec 9: RLHF",
-        "text": "What is the <b>Bradley-Terry</b> model used for?",
-        "options": [
-            "Modeling the probability that one item is preferred over another",
-            "Generating text",
-            "Calculating gradients",
-            "Tokenizing input text"
-        ],
-        "correct": 0,
-        "rationale": "The Bradley-Terry model provides a statistical framework to estimate a score function (Reward Model) from pairwise comparison data[cite: 3378]."
-    },
-    {
-        "topic": "Lec 3: CNNs",
-        "text": "Why do we typically increase the number of filters in deeper layers?",
-        "options": [
-            "To capture richer, higher-level feature combinations",
-            "Because the image size increases",
-            "To reduce the computational cost",
-            "It is required by the math"
-        ],
-        "correct": 0,
-        "rationale": "As spatial resolution drops (due to pooling), we increase the channel depth (filters) to preserve information capacity and capture complex semantic features[cite: 841]."
-    },
-    {
-        "topic": "Lec 5: Tokenization",
-        "text": "What is <b>BPE</b> (Byte Pair Encoding)?",
-        "options": [
-            "An algorithm to iteratively merge frequent character pairs into tokens",
-            "A method to encrypt text",
-            "A way to represent images as text",
-            "A loss function for training"
-        ],
-        "correct": 0,
-        "rationale": "BPE starts with characters and iteratively merges the most frequent adjacent pairs to form a vocabulary of subword units[cite: 2127]."
-    },
-    {
-        "topic": "Lec 9: Alignment",
-        "text": "What is the 'Alignment Tax'?",
-        "options": [
-            "Performance regression on downstream tasks due to RLHF",
-            "The cost of paying human labelers",
-            "The time it takes to align a model",
-            "A fee paid to OpenAI"
-        ],
-        "correct": 0,
-        "rationale": "Aligning a model (e.g., to be safe/helpful) can sometimes degrade its pure capability on objective benchmarks, a phenomenon known as the alignment tax."
-    },
-    {
-        "topic": "Lec 5: Components",
-        "text": "What corresponds to the 'Key' and 'Value' in standard Encoder-Decoder attention?",
-        "options": [
-            "The output of the Encoder",
-            "The previous tokens of the Decoder",
-            "The positional embeddings",
-            "The random initialization"
-        ],
-        "correct": 0,
-        "rationale": "In cross-attention, the Decoder produces the Query, while the Encoder's output provides the Keys and Values[cite: 1238]."
-    },
-    {
-        "topic": "Lec 9: Optimization",
-        "text": "What is <b>PPO</b> (Proximal Policy Optimization)?",
-        "options": [
-            "An RL algorithm used to optimize the policy without large unstable updates",
-            "A dataset for pretraining",
-            "A type of transformer attention",
-            "A method for tokenization"
-        ],
-        "correct": 0,
-        "rationale": "PPO is the standard on-policy RL algorithm used in RLHF. It constrains the update step to prevent the policy from changing too drastically at once[cite: 3297]."
+        "rationale": "Rejection Sampling (or Best-of-N) involves generating multiple candidates from the current policy, ranking them with the reward model, and treating the 'winner' as a new gold-standard label for supervised training."
     },
     {
         "topic": "Lec 4: Language Models",
@@ -669,7 +261,7 @@
             "The future words influence the past words"
         ],
         "correct": 0,
-        "rationale": "The Markov Assumption simplifies modeling by assuming the future ($x_{t+1}$) depends only on a short history ($x_{t-n+1}...x_t$), not the whole sequence[cite: 4]."
+        "rationale": "The Markov Assumption simplifies modeling by assuming the future ($x_{t+1}$) depends only on a short history ($x_{t-n+1}...x_t$), not the whole sequence."
     },
     {
         "topic": "Lec 4: RNNs",
@@ -681,7 +273,7 @@
             "They are restricted to fixed-size inputs"
         ],
         "correct": 0,
-        "rationale": "In standard RNNs, the gradient flows through the same weight matrix $W_h$ repeatedly during backpropagation through time. If eigenvalues are < 1, gradients vanish; if > 1, they explode[cite: 29]."
+        "rationale": "In standard RNNs, the gradient flows through the same weight matrix $W_h$ repeatedly during backpropagation through time. If eigenvalues are < 1, gradients vanish; if > 1, they explode."
     },
     {
         "topic": "Lec 4: LSTMs",
@@ -693,7 +285,7 @@
             "The Hidden State"
         ],
         "correct": 0,
-        "rationale": "The Forget Gate allows the LSTM to pass the cell state $C_{t-1}$ through to $C_t$ with a weight near 1.0, creating a 'gradient highway' that prevents decay[cite: 32]."
+        "rationale": "The Forget Gate allows the LSTM to pass the cell state $C_{t-1}$ through to $C_t$ with a weight near 1.0, creating a 'gradient highway' that prevents decay."
     },
     {
         "topic": "Lec 4: Evaluation",
@@ -705,7 +297,7 @@
             "The time it takes to generate a token"
         ],
         "correct": 0,
-        "rationale": "Perplexity is defined as $PP(W) = P(w_1...w_N)^{-1/N}$. Intuitively, it represents the 'weighted average branching factor'—the number of words the model is confused between[cite: 17]."
+        "rationale": "Perplexity is defined as $PP(W) = P(w_1...w_N)^{-1/N}$. Intuitively, it represents the 'weighted average branching factor'—the number of words the model is confused between."
     },
     {
         "topic": "Lec 6: SSL (MAE)",
@@ -717,7 +309,7 @@
             "To prevent the model from overfitting to colors"
         ],
         "correct": 0,
-        "rationale": "Images have high spatial redundancy. If you mask only 15%, the model can easily solve the task by interpolating from neighbors without understanding the object. 75% forces high-level understanding [cite: 13-14]."
+        "rationale": "Images have high spatial redundancy. If you mask only 15%, the model can easily solve the task by interpolating from neighbors without understanding the object. 75% forces high-level understanding."
     },
     {
         "topic": "Lec 6: SSL (MoCo)",
@@ -729,7 +321,7 @@
             "To calculate the classification loss"
         ],
         "correct": 0,
-        "rationale": "MoCo uses a queue of keys encoded by a slowly updating (momentum) network. This allows a large stream of consistent negative samples without the cost of updating the key encoder via backprop every step[cite: 41]."
+        "rationale": "MoCo uses a queue of keys encoded by a slowly updating (momentum) network. This allows a large stream of consistent negative samples without the cost of updating the key encoder via backprop every step."
     },
     {
         "topic": "Lec 8: Prompting",
@@ -741,7 +333,7 @@
             "Using a chain of if-else statements in the prompt"
         ],
         "correct": 0,
-        "rationale": "CoT encourages the model to decompose complex problems into intermediate steps (e.g., 'Let's think step by step'), which significantly improves performance on reasoning tasks[cite: 19]."
+        "rationale": "CoT encourages the model to decompose complex problems into intermediate steps (e.g., 'Let's think step by step'), which significantly improves performance on reasoning tasks."
     },
     {
         "topic": "Lec 8: Prompting",
@@ -753,19 +345,7 @@
             "Using a temperature of 0.0 to ensure deterministic outputs"
         ],
         "correct": 0,
-        "rationale": "Self-consistency involves sampling a diverse set of reasoning paths (using non-zero temperature) and selecting the most consistent final answer from the group[cite: 23]."
-    },
-    {
-        "topic": "Lec 8: Prompting",
-        "text": "What is the difference between <b>Soft Prompts</b> (Prompt Tuning) and <b>Hard Prompts</b>?",
-        "options": [
-            "Soft Prompts are learnable continuous vectors; Hard Prompts are discrete text tokens",
-            "Soft Prompts are written by humans; Hard Prompts are written by AI",
-            "Soft Prompts are used for generation; Hard Prompts for classification",
-            "Soft Prompts update all model weights; Hard Prompts update none"
-        ],
-        "correct": 0,
-        "rationale": "Hard prompts are discrete words (e.g., 'Translate:'). Soft prompts are learnable tensors prepended to the embedding layer that optimize task performance without changing model weights[cite: 39]."
+        "rationale": "Self-consistency involves sampling a diverse set of reasoning paths (using non-zero temperature) and selecting the most consistent final answer from the group."
     },
     {
         "topic": "Lec 8: Emergence",
@@ -777,7 +357,7 @@
             "Abilities found only in small, efficient models"
         ],
         "correct": 0,
-        "rationale": "Emergent abilities (like arithmetic or CoT) are not present in smaller models but appear discontinuously once the model parameters or training compute pass a critical threshold[cite: 46]."
+        "rationale": "Emergent abilities (like arithmetic or CoT) are not present in smaller models but appear discontinuously once the model parameters or training compute pass a critical threshold."
     },
     {
         "topic": "Lec 10: RL Basics",
@@ -789,7 +369,7 @@
             "The reward is always immediate"
         ],
         "correct": 0,
-        "rationale": "A state $S_t$ is Markov if it contains all relevant information from the history. Mathematically, $P(S_{t+1} | S_t) = P(S_{t+1} | S_1, ..., S_t)$[cite: 17]."
+        "rationale": "A state $S_t$ is Markov if it contains all relevant information from the history. Mathematically, $P(S_{t+1} | S_t) = P(S_{t+1} | S_1, ..., S_t)$."
     },
     {
         "topic": "Lec 10: RL Basics",
@@ -801,7 +381,7 @@
             "They are identical terms for the same concept"
         ],
         "correct": 0,
-        "rationale": "$V_{\\pi}(s)$ is the expected return starting from state $s$. $Q_{\\pi}(s,a)$ is the expected return starting from state $s$, taking action $a$, and then following policy $\\pi$[cite: 30]."
+        "rationale": "$V_{\\pi}(s)$ is the expected return starting from state $s$. $Q_{\\pi}(s,a)$ is the expected return starting from state $s$, taking action $a$, and then following policy $\\pi$."
     },
     {
         "topic": "Lec 11: RL Algorithms",
@@ -813,7 +393,7 @@
             "The agent learns without a reward function"
         ],
         "correct": 0,
-        "rationale": "Off-policy algorithms can update the target policy using data collected by a behavior policy (often stored in a Replay Buffer), improving sample efficiency[cite: 17]."
+        "rationale": "Off-policy algorithms can update the target policy using data collected by a behavior policy (often stored in a Replay Buffer), improving sample efficiency."
     },
     {
         "topic": "Lec 11: Policy Gradient",
@@ -825,7 +405,7 @@
             "To converting Q-values into V-values"
         ],
         "correct": 0,
-        "rationale": "It provides a way to calculate $\\nabla J(\\theta)$ (gradient of performance) by sampling trajectories, enabling optimization of non-differentiable reward functions via gradient ascent[cite: 43]."
+        "rationale": "It provides a way to calculate $\\nabla J(\\theta)$ (gradient of performance) by sampling trajectories, enabling optimization of non-differentiable reward functions via gradient ascent."
     },
     {
         "topic": "Lec 3: CNN Architectures",
@@ -837,19 +417,7 @@
             "They remove the need for pooling"
         ],
         "correct": 0,
-        "rationale": "A stack of three 3x3 convs has the same receptive field as a 7x7 (7x7 pixels), but with fewer parameters ($3 \\times 3^2$ vs $7^2$) and more non-linear activations in between[cite: 55]."
-    },
-    {
-        "topic": "Lec 5: Transformers",
-        "text": "What is the purpose of the <b>Encoder</b> in the original Transformer architecture?",
-        "options": [
-            "To process the input sequence and generate context representations",
-            "To generate the output sequence autoregressively",
-            "To compress the input into a single vector",
-            "To classify the sentiment of the text"
-        ],
-        "correct": 0,
-        "rationale": "The Encoder maps the input sequence to a sequence of continuous representations ($z$), which holds the context for the Decoder to attend to[cite: 13]."
+        "rationale": "A stack of three 3x3 convs has the same receptive field as a 7x7 (7x7 pixels), but with fewer parameters ($3 \\times 3^2$ vs $7^2$) and more non-linear activations in between."
     },
     {
         "topic": "Lec 5: Efficiency",
@@ -861,7 +429,7 @@
             "The embedding lookup table"
         ],
         "correct": 0,
-        "rationale": "Self-attention requires computing an $N \\times N$ matrix. As sequence length $N$ increases, memory and compute grow by $N^2$, making long contexts expensive[cite: 98]."
+        "rationale": "Self-attention requires computing an $N \\times N$ matrix. As sequence length $N$ increases, memory and compute grow by $N^2$, making long contexts expensive."
     },
     {
         "topic": "Lec 9: RLHF",
@@ -873,7 +441,7 @@
             "To prevent the reward model from changing"
         ],
         "correct": 0,
-        "rationale": "The Reference Model ($p^{PT}$) is usually the static SFT model. We compare the active RL policy against it to compute the KL divergence penalty[cite: 36]."
+        "rationale": "The Reference Model ($p^{PT}$) is usually the static SFT model. We compare the active RL policy against it to compute the KL divergence penalty."
     },
     {
         "topic": "Lec 11: Exploration",
@@ -885,7 +453,7 @@
             "Choosing actions based on a softmax distribution"
         ],
         "correct": 0,
-        "rationale": "Epsilon-greedy is a simple exploration strategy: with probability $\\epsilon$ explore (random action), and with probability $1-\\epsilon$ exploit (greedy action)[cite: 22]."
+        "rationale": "Epsilon-greedy is a simple exploration strategy: with probability $\\epsilon$ explore (random action), and with probability $1-\\epsilon$ exploit (greedy action)."
     },
     {
         "topic": "Lec 6: SSL",
@@ -897,7 +465,7 @@
             "A method to clean the dataset"
         ],
         "correct": 0,
-        "rationale": "Pretext tasks (like predicting the next word, or rotation prediction) are auto-generated from the data itself to provide a training signal for learning representations[cite: 5]."
+        "rationale": "Pretext tasks (like predicting the next word, or rotation prediction) are auto-generated from the data itself to provide a training signal for learning representations."
     },
     {
         "topic": "Lec 9: DPO",
@@ -909,19 +477,7 @@
             "Using the squared error of the prediction"
         ],
         "correct": 0,
-        "rationale": "DPO derives the reward implicitly as $R(x,y) = \\beta \\log (\\pi(y|x) / \\pi_{ref}(y|x))$. It uses the model's own probabilities as the reward signal[cite: 53]."
-    },
-    {
-        "topic": "Lec 3: CNNs",
-        "text": "What is <b>Translation Equivariance</b>?",
-        "options": [
-            "If the input shifts, the output feature map shifts by the same amount",
-            "If the input shifts, the output remains exactly the same",
-            "If the input rotates, the output rotates",
-            "The output is independent of the input position"
-        ],
-        "correct": 0,
-        "rationale": "Equivariance means $f(g(x)) = g(f(x))$. For conv layers, shifting the input image shifts the activation map correspondingly (unlike Invariance, which is achieved by pooling)[cite: 22]."
+        "rationale": "DPO derives the reward implicitly as $R(x,y) = \\beta \\log (\\pi(y|x) / \\pi_{ref}(y|x))$. It uses the model's own probabilities as the reward signal."
     },
     {
         "topic": "Lec 5: Positional Encoding",
@@ -933,7 +489,7 @@
             "To encrypt the token positions"
         ],
         "correct": 0,
-        "rationale": "Using a geometric progression of frequencies allows the model to easily learn to attend by relative positions (linear functions of phase shifts)[cite: 24]."
+        "rationale": "Using a geometric progression of frequencies allows the model to easily learn to attend by relative positions (linear functions of phase shifts)."
     },
     {
         "topic": "Lec 9: Optimization",
@@ -945,7 +501,7 @@
             "It removes the need for momentum"
         ],
         "correct": 0,
-        "rationale": "Standard Adam implements L2 regularization incorrectly. AdamW decouples weight decay, applying it directly to the weights, which improves generalization[cite: 39]."
+        "rationale": "Standard Adam implements L2 regularization incorrectly. AdamW decouples weight decay, applying it directly to the weights, which improves generalization."
     },
     {
         "topic": "Lec 10: RL Basics",
@@ -957,7 +513,7 @@
             "Deciding which state to start in"
         ],
         "correct": 0,
-        "rationale": "In RL, rewards are often sparse and delayed. Credit assignment is the challenge of figuring out *which* of the many actions taken previously actually caused the reward[cite: 8]."
+        "rationale": "In RL, rewards are often sparse and delayed. Credit assignment is the challenge of figuring out *which* of the many actions taken previously actually caused the reward."
     },
     {
         "topic": "Lec 5: Attention",
@@ -969,7 +525,7 @@
             "Global is slow; Local is inaccurate"
         ],
         "correct": 0,
-        "rationale": "Global attention (standard) computes interactions between all pairs. Local attention (like Sliding Window) restricts interactions to nearby tokens to save compute[cite: 98]."
+        "rationale": "Global attention (standard) computes interactions between all pairs. Local attention (like Sliding Window) restricts interactions to nearby tokens to save compute."
     },
     {
         "topic": "Lec 9: Alignment",
@@ -981,7 +537,7 @@
             "There is no trade-off"
         ],
         "correct": 0,
-        "rationale": "Aggressive safety filtering (Harmlessness) can lead to 'false refusals' where the model refuses to answer benign questions, reducing Helpfulness[cite: 24]."
+        "rationale": "Aggressive safety filtering (Harmlessness) can lead to 'false refusals' where the model refuses to answer benign questions, reducing Helpfulness."
     },
     {
         "topic": "Lec 4: RNNs",
@@ -993,7 +549,7 @@
             "Using a transformer to train an RNN"
         ],
         "correct": 0,
-        "rationale": "BPTT involves 'unrolling' the recurrent loop into a deep feedforward network structure and backpropagating errors through the time steps[cite: 54]."
+        "rationale": "BPTT involves 'unrolling' the recurrent loop into a deep feedforward network structure and backpropagating errors through the time steps."
     },
     {
         "topic": "Lec 11: RL Algorithms",
@@ -1005,7 +561,7 @@
             "It removes the need for a target network"
         ],
         "correct": 0,
-        "rationale": "Consecutive samples in RL are highly correlated. Storing them in a buffer and sampling randomly breaks these correlations, stabilizing training[cite: 32]."
+        "rationale": "Consecutive samples in RL are highly correlated. Storing them in a buffer and sampling randomly breaks these correlations, stabilizing training."
     },
     {
         "topic": "Lec 9: Data",
@@ -1017,7 +573,7 @@
             "The high cost of electricity"
         ],
         "correct": 0,
-        "rationale": "Much of the human preference data for RLHF is generated by workers in the Global South paid very low wages, raising ethical concerns[cite: 57]."
+        "rationale": "Much of the human preference data for RLHF is generated by workers in the Global South paid very low wages, raising ethical concerns."
     },
     {
         "topic": "Lec 8: Prompting",
@@ -1041,7 +597,7 @@
             "The image is flipped"
         ],
         "correct": 0,
-        "rationale": "'Same' padding adds enough zeros to ensure that with a stride of 1, the output width/height matches the input width/height[cite: 97]."
+        "rationale": "'Same' padding adds enough zeros to ensure that with a stride of 1, the output width/height matches the input width/height."
     },
     {
         "topic": "Lec 5: Attention",
@@ -1065,7 +621,7 @@
             "It only understands Python"
         ],
         "correct": 0,
-        "rationale": "CodeLlama is a version of Llama further pre-trained and fine-tuned on code-specific datasets to enhance programming capabilities[cite: 104]."
+        "rationale": "CodeLlama is a version of Llama further pre-trained and fine-tuned on code-specific datasets to enhance programming capabilities."
     },
     {
         "topic": "Lec 6: SSL",
@@ -1077,6 +633,216 @@
             "To reduce the training time"
         ],
         "correct": 0,
-        "rationale": "Without negatives, the loss is minimized by making all outputs identical. Negatives force the model to push dissimilar items apart in the embedding space[cite: 20]."
+        "rationale": "Without negatives, the loss is minimized by making all outputs identical. Negatives force the model to push dissimilar items apart in the embedding space."
+    },
+    {
+        "topic": "Lec 3: CNNs",
+        "text": "What is the receptive field of a single neuron in the <b>first</b> conv layer with a 3x3 kernel?",
+        "options": ["3x3 pixels", "1x1 pixels", "The whole image", "Depends on Stride"],
+        "correct": 0,
+        "rationale": "In the first layer, a neuron only sees the pixels immediately under its filter, so 3x3."
+    },
+    {
+        "topic": "Lec 3: CNNs",
+        "text": "If you have 10 filters of size 5x5x3, how many <b>biases</b> do you learn?",
+        "options": ["10", "75", "750", "0"],
+        "correct": 0,
+        "rationale": "You learn one bias term per filter (output map), so 10 biases."
+    },
+    {
+        "topic": "Lec 3: CNNs",
+        "text": "What does <b>Max Pooling</b> achieve?",
+        "options": ["Translation Invariance & Downsampling", "Rotational Invariance", "Color Normalization", "Parameter Reduction"],
+        "correct": 0,
+        "rationale": "Pooling makes the representation smaller and invariant to small shifts (translations) in the input."
+    },
+    {
+        "topic": "Lec 4: LM",
+        "text": "Why do we use <b>Smoothing</b> (e.g. Kneser-Ney)?",
+        "options": ["To handle zero-count probabilities", "To reduce vocabulary size", "To speed up training", "To remove stop words"],
+        "correct": 0,
+        "rationale": "If a word sequence never appeared in training, MLE assigns it 0 probability. Smoothing fixes this infinite perplexity issue."
+    },
+    {
+        "topic": "Lec 5: Attention",
+        "text": "In Self-Attention, what connects the current token to other tokens?",
+        "options": ["Query-Key Dot Product", "Value-Value Addition", "Fixed Weights", "Convolution"],
+        "correct": 0,
+        "rationale": "We calculate similarity scores by taking the dot product of the Query vector with all Key vectors."
+    },
+    {
+        "topic": "Lec 6: Pretext",
+        "text": "Which is a <b>Generative</b> pretext task?",
+        "options": ["Masked Autoencoding (MAE)", "Jigsaw Puzzle", "Rotation Prediction", "Instance Discrimination"],
+        "correct": 0,
+        "rationale": "MAE tries to reconstruct the pixels (generate data), whereas the others are discriminative classification tasks."
+    },
+    {
+        "topic": "Lec 6: SimCLR",
+        "text": "SimCLR uses which loss function?",
+        "options": ["InfoNCE", "Mean Squared Error", "KL Divergence", "Hinge Loss"],
+        "correct": 0,
+        "rationale": "InfoNCE (Noise Contrastive Estimation) maximizes mutual information between views."
+    },
+    {
+        "topic": "Lec 9: Tuning",
+        "text": "What is <b>Prompt Tuning</b> (Lester 2021)?",
+        "options": ["Optimizing continuous embedding vectors", "Rewriting text prompts manually", "Fine-tuning all model weights", "Using RLHF"],
+        "correct": 0,
+        "rationale": "Prompt Tuning freezes the model and optimizes a small set of 'soft prompt' vectors at the input layer."
+    },
+    {
+        "topic": "Lec 9: Data",
+        "text": "Where does the <b>Reward Signal</b> come from in RLHF?",
+        "options": ["A learned Reward Model (RM)", "Direct Human Feedback", "BLEU score", "Ground Truth labels"],
+        "correct": 0,
+        "rationale": "We train a separate Reward Model on human preferences, then use that model to score generations during RL."
+    },
+    {
+        "topic": "Lec 10: Basics",
+        "text": "What tuple defines an <b>MDP</b>?",
+        "options": ["(S, A, T, R, gamma)", "(S, A, Loss, Optimizer)", "(Input, Hidden, Output)", "(State, Action, Value)"],
+        "correct": 0,
+        "rationale": "States, Actions, Transition probability, Reward function, and Discount factor."
+    },
+    {
+        "topic": "Lec 10: Basics",
+        "text": "What is <b>Imitation Learning</b>?",
+        "options": ["Supervised learning on expert actions", "Learning from rewards", "Unsupervised exploration", "Self-play"],
+        "correct": 0,
+        "rationale": "Also called Behavioral Cloning; simply trying to predict the action an expert took in a given state."
+    },
+    {
+        "topic": "Lec 11: Algs",
+        "text": "Which is an <b>On-Policy</b> algorithm?",
+        "options": ["PPO", "DQN", "Q-Learning", "DDPG"],
+        "correct": 0,
+        "rationale": "PPO requires data collected by the current policy to calculate valid gradient updates."
+    },
+    {
+        "topic": "Lec 11: Algs",
+        "text": "What is <b>Model-Based</b> RL?",
+        "options": ["Learning a model of dynamics P(s'|s,a)", "Using a pre-trained ResNet", "Model-free learning", "Using a large language model"],
+        "correct": 0,
+        "rationale": "The agent explicitly learns how the environment works (dynamics) to plan ahead."
+    },
+    {
+        "topic": "Lec 4: LSTM",
+        "text": "What does the <b>Input Gate</b> do in an LSTM?",
+        "options": ["Decides what new information to store in the cell state", "Decides what output to generate", "Decides what to forget", "Normalizes the input"],
+        "correct": 0,
+        "rationale": "The Input Gate (sigmoid layer) decides which values we'll update, combined with a tanh layer that creates a vector of new candidate values."
+    },
+    {
+        "topic": "Lec 6: MoCo",
+        "text": "What is the benefit of the <b>Queue</b> in MoCo?",
+        "options": ["Decouples batch size from the number of negative samples", "Speeds up the momentum update", "Stores the model weights", "Calculates the loss"],
+        "correct": 0,
+        "rationale": "The queue allows for a large and consistent dictionary of negative samples without needing a massive mini-batch size."
+    },
+    {
+        "topic": "Lec 8: Prompting",
+        "text": "What is the key idea behind <b>ReAct</b> prompting?",
+        "options": ["Interleaving Reasoning and Acting (tool use)", "Reacting to user emotions", "Repeating the action until success", "Using reinforcement learning"],
+        "correct": 0,
+        "rationale": "ReAct combines Chain-of-Thought (reasoning) with the ability to take actions (like searching Wikipedia) to solve tasks."
+    },
+    {
+        "topic": "Lec 10: RL",
+        "text": "What is the <b>Discount Factor</b> (gamma)?",
+        "options": ["Determines how much future rewards are valued vs immediate rewards", "The learning rate", "The probability of taking a random action", "The decay rate of the epsilon greedy strategy"],
+        "correct": 0,
+        "rationale": "A gamma close to 0 makes the agent myopic (greedy), while a gamma close to 1 makes it strive for long-term high reward."
+    },
+    {
+        "topic": "Lec 11: RL",
+        "text": "What is <b>Experience Replay</b> used for?",
+        "options": ["Breaking correlations in data for Off-Policy learning", "Replaying the best game to the user", "Simulating future states", "Resetting the environment"],
+        "correct": 0,
+        "rationale": "By storing and randomly sampling past experiences, we break the temporal correlation of sequential data, stabilizing training for algorithms like DQN."
+    },
+    {
+        "topic": "Lec 5: Transformers",
+        "text": "What is the complexity of the <b>Feed Forward</b> layer in terms of hidden dimension d?",
+        "options": ["$$ O(d^2) $$", "$$ O(d) $$", "$$ O(d \\log d) $$", "$$ O(1) $$"],
+        "correct": 0,
+        "rationale": "The FFN involves dense matrix multiplications (usually projecting d to 4d and back), which is quadratic in the model dimension d."
+    },
+    {
+        "topic": "Lec 3: CNNs",
+        "text": "What is the output size of a 1x1 conv with 64 filters on a 28x28x32 input?",
+        "options": ["28x28x64", "28x28x32", "1x1x64", "1x1x32"],
+        "correct": 0,
+        "rationale": "Spatial dimensions (28x28) are preserved (1x1 kernel). The depth changes to the number of filters (64)."
+    },
+    {
+        "topic": "Lec 9: Tuning",
+        "text": "What is <b>Prefix Tuning</b>?",
+        "options": ["Prepending learnable vectors to keys/values in every attention layer", "Adding a prefix word to the input string", "Tuning only the first layer", "Using a pre-trained encoder"],
+        "correct": 0,
+        "rationale": "Prefix Tuning optimizes a sequence of continuous task-specific vectors (prefixes) at every layer of the transformer, not just the input."
+    },
+    {
+        "topic": "Lec 6: SSL",
+        "text": "Why is <b>Color Jittering</b> crucial for SimCLR?",
+        "options": ["To prevent the model from relying on color histograms to distinguish images", "To make the images look nicer", "To simulate different lighting conditions", "To reduce the image size"],
+        "correct": 0,
+        "rationale": "Without color jitter, the model can trivially distinguish images based on their color distribution histograms rather than learning semantic features."
+    },
+    {
+        "topic": "Lec 11: RL",
+        "text": "What is the <b>Critic</b> in Actor-Critic methods?",
+        "options": ["Estimates the Value function V(s) to reduce variance", "Selects the actions", "Critiques the reward function", "Generates the adversarial examples"],
+        "correct": 0,
+        "rationale": "The Actor learns the policy, while the Critic estimates the value function to provide a lower-variance baseline for the policy update."
+    },
+    {
+        "topic": "Lec 8: Prompting",
+        "text": "What is <b>Few-Shot</b> prompting?",
+        "options": ["Providing k examples of (input, output) in the context window", "Training on k examples", "Testing on k examples", "Using a model with k parameters"],
+        "correct": 0,
+        "rationale": "Few-shot prompting leverages the model's in-context learning ability by showing it a few demonstrations of the task at inference time."
+    },
+    {
+        "topic": "Lec 4: RNNs",
+        "text": "What is a <b>Bidirectional RNN</b>?",
+        "options": ["Processing the sequence both forward and backward and concatenating outputs", "Predicting both the next and previous word", "Having two layers of RNNs", "Sharing weights between encoder and decoder"],
+        "correct": 0,
+        "rationale": "BiRNNs read the input from left-to-right and right-to-left simultaneously, allowing the current state to have information from both past and future context."
+    },
+    {
+        "topic": "Lec 9: RLHF",
+        "text": "What is the <b>Reference Model</b> in RLHF?",
+        "options": ["The original SFT model (frozen) used for KL divergence", "The reward model", "The human labeler", "The best performing model"],
+        "correct": 0,
+        "rationale": "The reference model is a frozen copy of the supervised fine-tuned model. We penalize the RL policy if it diverges too far from this reference."
+    },
+    {
+        "topic": "Lec 3: CNNs",
+        "text": "What is the primary motivation for using <b>Dilated Convolutions</b>?",
+        "options": ["To exponentially increase the receptive field without losing resolution", "To reduce the number of parameters", "To speed up computation", "To invert the image"],
+        "correct": 0,
+        "rationale": "Dilation inserts holes in the kernel, expanding its field of view exponentially with depth while keeping the number of parameters constant."
+    },
+    {
+        "topic": "Lec 5: Transformers",
+        "text": "What does the <b>Decoder</b> mask in a Transformer do?",
+        "options": ["Prevents positions from attending to subsequent positions (future)", "Prevents padding tokens from being processed", "Masks out rare words", "Hides the ground truth label"],
+        "correct": 0,
+        "rationale": "The decoder mask ensures the autoregressive property: when generating token t, the model cannot 'see' token t+1."
+    },
+    {
+        "topic": "Lec 11: RL",
+        "text": "What is <b>Q-Learning</b>?",
+        "options": ["An off-policy algorithm that learns the value of state-action pairs", "An on-policy algorithm for policy optimization", "A model-based algorithm", "A genetic algorithm"],
+        "correct": 0,
+        "rationale": "Q-Learning iteratively updates the Q-values based on the Bellman equation, learning the optimal policy indirectly (Value-based)."
+    },
+    {
+        "topic": "Lec 9: DPO",
+        "text": "What distribution does DPO assume for human preferences?",
+        "options": ["Bradley-Terry model", "Gaussian distribution", "Poisson distribution", "Uniform distribution"],
+        "correct": 0,
+        "rationale": "DPO (and RLHF reward modeling) assumes the probability of preferring y_w over y_l follows the Bradley-Terry model based on the difference in implicit rewards."
     }
 ]
